@@ -1,33 +1,54 @@
-# ul-language-vm
-A minimal custom language runtime featuring a tokenizer, parser, bytecode compiler, and virtual machine. Designed for deterministic execution and as a foundational component of the AAIS architecture.
-# AAIS UL Runtime
+# 🔥 UL Language VM
 
-A minimal custom language runtime built from scratch, including:
+> A minimal custom language runtime built from scratch — tokenizer, parser, bytecode compiler, and stack-based virtual machine. Designed for deterministic execution and as the foundational engine of the **AAIS architecture**.
 
-- Tokenizer
-- Recursive descent parser
-- Bytecode compiler
-- Stack-based virtual machine
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
+![License](https://img.shields.io/badge/License-Apache%202.0-green?style=flat-square)
+![Version](https://img.shields.io/badge/Version-0.1.0-orange?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
 
-Designed for deterministic execution and structured system behavior as part of the AAIS architecture.
+---
+
+## What is UL?
+
+UL is a custom programming language with its own runtime — built entirely from scratch in Python. It's not a toy script. It's a real execution substrate: source code goes in, tokens come out, an AST gets built, bytecode gets compiled, and a stack-based VM runs it deterministically.
+
+This repo is the core engine. Everything else — the playground, the evolution arena, the VM challenge pack — runs on top of this.
 
 ---
 
 ## Features
 
-- Variable assignment (`set x to 5`)
-- Arithmetic operations
-- Functions with parameters and return values
-- Conditionals (`if / else`)
-- Loops (`while`, `repeat`)
-- Lists and dictionaries
-- Built-in functions (`print`, `len`, etc.)
+| Feature | Status |
+|---|---|
+| Tokenizer | ✅ |
+| Recursive descent parser | ✅ |
+| AST builder | ✅ |
+| Bytecode compiler | ✅ |
+| Stack-based VM | ✅ |
+| Variable assignment | ✅ |
+| Arithmetic operations | ✅ |
+| Functions with parameters + return values | ✅ |
+| Conditionals (`if` / `else`) | ✅ |
+| Loops (`while`, `repeat`) | ✅ |
+| Lists and dictionaries | ✅ |
+| Built-ins (`print`, `len`, etc.) | ✅ |
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/warheart1984-ctrl/ul-language-vm.git
+cd ul-language-vm
+python ul_core.py
+```
 
 ---
 
 ## Example
 
-```plaintext
+```
 set x to 5
 set y to 3
 
@@ -41,254 +62,134 @@ print z
 repeat 3 times
     print "loop"
 end
+```
+
+**Output:**
+```
 8
 loop
 loop
 loop
+```
 
+---
 
+## Architecture
 
+Source code flows through the full pipeline:
 
-bash python ul_core.py
+```
+UL Source Code
+      ↓
+  Tokenizer        →  breaks source into tokens
+      ↓
+   Parser          →  recursive descent, builds AST
+      ↓
+     AST           →  abstract syntax tree
+      ↓
+  Bytecode         →  compiles AST to instructions
+ Compiler
+      ↓
+Stack-based VM     →  executes bytecode deterministically
+```
 
+---
 
+## Roadmap — UL Dev Playground
 
+This VM is Phase 1 of a larger project: the **UL Dev Playground** — a transparent, interactive environment for developers to explore how programming languages actually work.
 
+### Three Modes
 
+#### 🎮 Play Mode — UL Sandbox
+Write UL code and watch the AST, bytecode, and VM state update live. Like opening the hood of a language engine while it's running.
 
+- Live UL editor
+- AST viewer
+- Bytecode viewer
+- VM stepper (step / run / rewind)
+- Stack + heap visualizer
+- Execution timeline
+- Performance meter
 
+#### 🔥 Chaos Mode — Evolution Arena
+Write a UL function, pick a goal (speed, size, correctness, weirdness), and watch the engine mutate and evolve your code across generations.
 
+- Mutation diff viewer
+- Fitness graph
+- Branching evolution tree
+- Export best version
 
-🔥 UL Dev Playground
-Complete System Design
-A transparent, deterministic language playground with three modes
+#### 🧩 Puzzle Mode — VM Challenge Pack
+Curated VM puzzles. Fix broken instructions. Implement `CALL` / `RET`. Make recursion work. Like Advent of Code, but for language nerds.
 
-A single product. Three modes. One deterministic substrate.
-•🎮  Play Mode → UL Sandbox — write UL, see AST, bytecode, and VM state live
-•🔥  Chaos Mode → Evolution Arena — watch your functions evolve under a real evolving engine
-•🧩  Puzzle Mode → VM Challenge Pack — fix and extend the UL VM through curated puzzles
+- Fix a broken instruction
+- Add `JUMP_IF_FALSE`
+- Implement `CALL` / `RET`
+- Optimize bytecode
+- Add a built-in
 
-🔥 1. Core Engine — Shared by All Modes
-The heart of the system — the part you already built. Everything else sits on this substrate.
+### Build Order
 
-Modules
-core/
-    tokenizer.py
-    parser.py
-    ast.py
-    compiler.py
-    bytecode.py
-    vm.py
-    evolving_engine.py
-    runtime_state.py
+| Phase | Milestone | Description |
+|---|---|---|
+| ✅ 1 | Core Engine | Tokenizer → Parser → Bytecode Compiler → VM |
+| 🔜 2 | UL Sandbox | Live editor with AST + VM visualizer |
+| 🔜 3 | Evolution Arena | Mutation engine + fitness graph |
+| 🔜 4 | VM Challenge Pack | Weekly puzzles, community contributions |
+| 🔜 5 | Extensions | Package manager · Standard library · WASM compiler |
 
-Capabilities
-•Deterministic tokenizer
-•Full parser + AST builder
-•Expression engine + bytecode compiler
-•Stack-based VM with CALL / RET / JUMP
-•Local scopes + stack frames
-•Lists, objects, indexing, and properties
-•Built-ins
-•Evolving engine — mutation, fitness scoring, lineage tracking
+---
 
-🔥 2. UL Sandbox — Play Mode
-Instant fun. Instant visibility. Instant "wow."
-It's like opening the hood of a language engine and watching it run.
+## Project Structure (Planned)
 
-Core Features
-•Live UL editor
-•AST viewer
-•Bytecode viewer
-•VM stepper (step, run, rewind)
-•Stack + heap visualizer
-•Jump arrows (CALL, RET, JUMP)
-•Execution timeline
-•Performance meter
-•"Mutate this code" button (optional)
-
-UI Layout
-UL Editor
-AST Tree
-Bytecode
-VM Stack / Frames / Heap
-
-Controls: [Run]  [Step]  [Reset]  [Show Mutations]   Exec time: 0.42 ms
-
-🔥 3. Evolution Arena — Chaos Mode
-Let devs watch code mutate, compete, and evolve. It's addictive. It's visual. It's alive.
-
-Core Features
-•Write a UL function
-•Choose a goal:
-◦Speed
-◦Size
-◦Correctness
-◦Weirdness
-◦Creativity
-•Watch generations evolve in real time
-•Mutation diff viewer
-•Fitness graph
-•Branching evolution tree
-•Export best version
-
-UI Layout
-Original Function
-Best Current Generation
-Mutation Diff
-Fitness Graph
-
-Controls: [Start Evolution]  [Pause]  [Reset]   Target: Speed ▼   Gen: 42   Best: 0.987
-
-How it Works
-•Dev pastes or writes a UL function and picks a target
-•Backend uses evolving_engine.py to mutate the AST, compile to bytecode, run in VM, and score fitness
-•UI updates live: best generation, mutation diff, and fitness graph
-•Optional: "Export best" copies the winning code to clipboard
-
-🔥 4. VM Challenge Pack — Puzzle Mode
-A set of VM puzzles devs can solve. Like Advent of Code, but for language nerds.
-
-Challenge Types
-•Fix a broken instruction
-•Add JUMP_IF_FALSE
-•Implement CALL / RET
-•Make recursion work
-•Optimize bytecode
-•Add a built-in
-•Make a UL program run correctly
-
-Each Challenge Includes
-•UL program
-•Expected AST
-•Expected bytecode
-•Expected VM trace
-•Failing behavior description
-•Hints
-•Solution validator
-
-🔥 5. Unified Architecture
-All three modes share the same engine. One codebase, three experiences.
-
-UL Source
-   ↓
-Tokenizer
-   ↓
-Parser
-   ↓
-AST
-   ↓
-Bytecode Compiler
-   ↓
-VM
-   ↓
-Evolving Engine  (Arena only)
-
-🔥 6. Unified Repo Structure
+```
 UL-Playground/
-    core/
-        tokenizer.py
-        parser.py
-        ast.py
-        compiler.py
-        bytecode.py
-        vm.py
-        evolving_engine.py
-    sandbox/
-        sandbox_app.py
-        ui/
-            editor.js
-            ast_viewer.js
-            bytecode_viewer.js
-            vm_visualizer.js
-    arena/
-        arena_app.py
-        ui/
-            mutation_diff.js
-            fitness_graph.js
-            evolution_tree.js
-    challenges/
-        challenge_engine.py
-        challenge_sets/
-            01_basics/
-            02_vm/
-            03_advanced/
-    shared_ui/
-        components/
-        themes/
-    docs/
-        README.md
-        API.md
-        CONTRIBUTING.md
+├── core/
+│   ├── tokenizer.py
+│   ├── parser.py
+│   ├── ast.py
+│   ├── compiler.py
+│   ├── bytecode.py
+│   ├── vm.py
+│   └── evolving_engine.py
+├── sandbox/
+│   ├── sandbox_app.py
+│   └── ui/
+├── arena/
+│   ├── arena_app.py
+│   └── ui/
+├── challenges/
+│   ├── challenge_engine.py
+│   └── challenge_sets/
+└── docs/
+```
 
-FastAPI Entry Point
-from fastapi import FastAPI
-from ul_playground.sandbox.api    import router as sandbox_router
-from ul_playground.arena.api      import router as arena_router
-from ul_playground.challenges.api import router as challenges_router
+---
 
-app = FastAPI(title='UL Playground')
-app.include_router(sandbox_router,    prefix='/api/sandbox')
-app.include_router(arena_router,      prefix='/api/arena')
-app.include_router(challenges_router, prefix='/api/challenges')
+## Part of the AAIS Architecture
 
-pyproject.toml
-[project]
-name = "ul-playground"
-version = "0.1.0"
-requires-python = ">=3.10"
-dependencies = ["fastapi", "uvicorn[standard]"]
+UL is the execution substrate for **AAIS** — a structured system designed around deterministic, auditable, and traceable behavior. Every token, every AST node, every bytecode instruction is intentional and inspectable.
 
-[project.scripts]
-ul-playground = "ul_playground.app:run"
+---
 
-🔥 7. Roadmap — Build Order
+## Contributing
 
-Phase
-Description
-Phase 1 — Core Engine
-You already built 90% of this. The deterministic substrate everything else runs on.
-Phase 2 — UL Sandbox
-Fastest to ship. Instantly fun. Perfect teaser — devs see their code come alive.
-Phase 3 — Evolution Arena
-Showcases the evolving engine. Huge viral potential — watching code evolve is addictive.
-Phase 4 — VM Challenge Pack
-Community engagement. Weekly challenges. Devs start contributing.
-Phase 5 — Extensions
-UL package manager · UL standard library · UL → WASM compiler · UL desktop app · UL web playground
+This project is early and moving fast. If you want to:
 
-🔥 8. Branding Options
-Pick the vibe that fits your project:
+- Add a new built-in function
+- Extend the VM instruction set
+- Build a UI for the sandbox
+- Submit a VM challenge puzzle
 
-🎈 Playful
-🔧 Technical
-⚡ Epic
-UL Playground
-UL Lab
-UL Funhouse
-UL DevKit
-UL Engine Suite
-UL Runtime Studio
-UL Forge
-UL Arena
-UL Nexus
+Open an issue or a PR. All contributions welcome.
 
-🏛 A Note on Naming: Mnemosyne
-If your project name draws from Greek mythology, the repo name practically writes itself:
+---
 
-Mnemosyne Dev Playground
-Mnemosyne = memory in Greek mythology. It fits what you're actually building: a deterministic, replayable, traceable substrate that remembers everything — every AST node, every bytecode instruction, every VM step.
+## License
 
-Top-level folder:
-Mnemosyne Dev Playground/
+[Apache 2.0](LICENSE) — use it, fork it, build on it.
 
-How to Run
-pip install -e .
-ul-playground
+---
 
-# Routes:
-#   http://127.0.0.1:8000/            → Landing page
-#   http://127.0.0.1:8000/sandbox     → UL Sandbox
-#   http://127.0.0.1:8000/arena       → Evolution Arena
-#   http://127.0.0.1:8000/challenges  → VM Challenge Pack
-
+*Built by [@warheart1984-ctrl](https://github.com/warheart1984-ctrl)*
