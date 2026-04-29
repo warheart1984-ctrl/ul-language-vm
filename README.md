@@ -41,7 +41,7 @@ This repo is the core engine. Everything else — the playground, the evolution 
 ```bash
 git clone https://github.com/warheart1984-ctrl/ul-language-vm.git
 cd ul-language-vm
-python ul_core.py
+python ul_core_1.py
 ```
 
 ---
