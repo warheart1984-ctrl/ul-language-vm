@@ -1,6 +1,6 @@
 🔥 UL Language VM
 
-A minimal custom language runtime built from scratch — tokenizer, parser, bytecode compiler, and stack-based virtual machine.
+A minimal custom language runtime built from scratch — tokenizer, parser, bytecode compiler, and a stack-based virtual machine.
 
 Designed for deterministic execution and as the foundational engine of the AAIS architecture.
 
@@ -142,7 +142,7 @@ Want to help?
 
 Add built-ins
 Extend VM instructions
-Build UI for sandbox
+Build UI for the sandbox
 Create challenge puzzles
 
 Open an issue or PR — contributions welcome.
