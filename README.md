@@ -184,6 +184,32 @@ This project is early and moving fast. If you want to:
 
 Open an issue or a PR. All contributions welcome.
 
+Search within code
+ 
+‎dev playground.zip‎
+36.3 KB
+Binary file not shown.
+1 commit comments
+Comments
+1
+ (1)
+warheart1984-ctrl commented now
+@warheart1984-ctrl
+
+warheart1984-ctrl
+now
+Owner
+Author
+Dev Playground
+The playground is included as a packaged build:
+
+dev playground.zip contains the interactive UL sandbox environment
+This is separated from the core VM to keep the runtime clean and minimal
+To use:
+
+Extract the zip
+Run the playground app (instructions inside)
+
 ---
 
 ## License
