@@ -67,20 +67,12 @@ class Parser:
     def peek(self) -> Token:
         return self.tokens[self.pos]
 
-    def peek_non_newline(self) -> Token:
-        i = self.pos
-        while i < len(self.tokens) and self.tokens[i].type == 'NEWLINE':
-            i += 1
-        return self.tokens[i]
-
     def next(self) -> Token:
         t = self.tokens[self.pos]
         self.pos += 1
         return t
 
     def expect(self, ttype: str, val: Optional[str] = None) -> Token:
-        while self.tokens[self.pos].type == 'NEWLINE':
-            self.pos += 1
         t = self.peek()
         if t.type != ttype or (val is not None and t.value != val):
             raise SyntaxError(f'Expected {ttype} {val}, got {t.type} {t.value}')
@@ -94,9 +86,12 @@ class Parser:
             stmts.append(self.parse_stmt())
         return ('program', stmts)
 
-    def parse_stmt(self):
+    def skip_newlines(self):
         while self.peek().type == 'NEWLINE':
             self.next()
+
+    def parse_stmt(self):
+        self.skip_newlines()
         t = self.peek()
         if t.type == 'NAME' and t.value == 'set':
             self.next()
@@ -115,8 +110,10 @@ class Parser:
             while self.peek().type == 'NAME':
                 params.append(self.next().value)
             body = []
-            while not (self.peek_non_newline().type == 'NAME' and self.peek_non_newline().value == 'end'):
+            self.skip_newlines()
+            while not (self.peek().type == 'NAME' and self.peek().value == 'end'):
                 body.append(self.parse_stmt())
+                self.skip_newlines()
             self.expect('NAME', 'end')
             return ('function', fname, params, body)
         if t.type == 'NAME' and t.value == 'return':
@@ -128,20 +125,26 @@ class Parser:
             cond = self.parse_expr()
             body = []
             else_body = []
-            while not (self.peek_non_newline().type == 'NAME' and (self.peek_non_newline().value in ('else', 'end'))):
+            self.skip_newlines()
+            while not (self.peek().type == 'NAME' and (self.peek().value in ('else', 'end'))):
                 body.append(self.parse_stmt())
-            if self.peek_non_newline().type == 'NAME' and self.peek_non_newline().value == 'else':
+                self.skip_newlines()
+            if self.peek().type == 'NAME' and self.peek().value == 'else':
                 self.next()
-                while not (self.peek_non_newline().type == 'NAME' and self.peek_non_newline().value == 'end'):
+                self.skip_newlines()
+                while not (self.peek().type == 'NAME' and self.peek().value == 'end'):
                     else_body.append(self.parse_stmt())
+                    self.skip_newlines()
             self.expect('NAME', 'end')
             return ('if', cond, body, else_body)
         if t.type == 'NAME' and t.value == 'while':
             self.next()
             cond = self.parse_expr()
             body = []
-            while not (self.peek_non_newline().type == 'NAME' and self.peek_non_newline().value == 'end'):
+            self.skip_newlines()
+            while not (self.peek().type == 'NAME' and self.peek().value == 'end'):
                 body.append(self.parse_stmt())
+                self.skip_newlines()
             self.expect('NAME', 'end')
             return ('while', cond, body)
         if t.type == 'NAME' and t.value == 'repeat':
@@ -149,8 +152,10 @@ class Parser:
             times = self.parse_expr()
             self.expect('NAME', 'times')
             body = []
-            while not (self.peek_non_newline().type == 'NAME' and self.peek_non_newline().value == 'end'):
+            self.skip_newlines()
+            while not (self.peek().type == 'NAME' and self.peek().value == 'end'):
                 body.append(self.parse_stmt())
+                self.skip_newlines()
             self.expect('NAME', 'end')
             return ('repeat', times, body)
         # expression statement
@@ -383,7 +388,7 @@ class Compiler:
             start = len(self.code)
             self.emit(LOAD_NAME, self.add_name('__repeat_counter'))
             self.emit(LOAD_CONST, self.add_const(0))
-            self.emit(BINARY_OP, '>')
+            self.emit(BINARY_OP, '<=')
             jfalse_pos = len(self.code); self.emit(JUMP_IF_FALSE, None)
             for s in body: self.compile(s)
             self.emit(LOAD_NAME, self.add_name('__repeat_counter'))
@@ -434,7 +439,12 @@ class VM:
         globals_ = globals_ or {}
         frame = Frame(code, consts, names, globals_)
         self.frames.append(frame)
-        return self.run_frame(frame)
+        result = self.run_frame(frame)
+        # Promote functions defined in top-level locals to globals for recursion
+        for k, v in frame.locals.items():
+            if isinstance(v, dict) and v.get('type') == 'function':
+                globals_[k] = v
+        return result
 
     def run_frame(self, f: Frame):
         while f.ip < len(f.code):
@@ -505,7 +515,9 @@ class VM:
                 idx, fname = arg
                 func_obj = f.consts[idx]
                 _, code_obj, consts, names, params = func_obj
-                f.locals[fname] = {'type': 'function', 'code': code_obj, 'consts': consts, 'names': names, 'params': params}
+                func_def = {'type': 'function', 'code': code_obj, 'consts': consts, 'names': names, 'params': params}
+                f.locals[fname] = func_def
+                f.globals[fname] = func_def
             elif op == RETURN:
                 val = f.stack.pop() if f.stack else None
                 self.frames.pop()
