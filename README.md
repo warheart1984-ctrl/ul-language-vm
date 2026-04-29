@@ -1,54 +1,53 @@
-# 🔥 UL Language VM
+🔥 UL Language VM
 
-> A minimal custom language runtime built from scratch — tokenizer, parser, bytecode compiler, and stack-based virtual machine. Designed for deterministic execution and as the foundational engine of the **AAIS architecture**.
+A minimal custom language runtime built from scratch — tokenizer, parser, bytecode compiler, and stack-based virtual machine.
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
-![License](https://img.shields.io/badge/License-Apache%202.0-green?style=flat-square)
-![Version](https://img.shields.io/badge/Version-0.1.0-orange?style=flat-square)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
+Designed for deterministic execution and as the foundational engine of the AAIS architecture.
 
----
+🧠 What is UL?
 
-## What is UL?
+UL is a custom programming language with its own runtime — built entirely from scratch in Python.
 
-UL is a custom programming language with its own runtime — built entirely from scratch in Python. It's not a toy script. It's a real execution substrate: source code goes in, tokens come out, an AST gets built, bytecode gets compiled, and a stack-based VM runs it deterministically.
+It is not a toy interpreter.
 
-This repo is the core engine. Everything else — the playground, the evolution arena, the VM challenge pack — runs on top of this.
+It is a deterministic execution substrate:
 
----
+Source code → tokens → AST → bytecode → execution
+Every step is explicit, inspectable, and controlled
+The same input always produces the same output
 
-## Features
+This repository contains the core engine.
 
-| Feature | Status |
-|---|---|
-| Tokenizer | ✅ |
-| Recursive descent parser | ✅ |
-| AST builder | ✅ |
-| Bytecode compiler | ✅ |
-| Stack-based VM | ✅ |
-| Variable assignment | ✅ |
-| Arithmetic operations | ✅ |
-| Functions with parameters + return values | ✅ |
-| Conditionals (`if` / `else`) | ✅ |
-| Loops (`while`, `repeat`) | ✅ |
-| Lists and dictionaries | ✅ |
-| Built-ins (`print`, `len`, etc.) | ✅ |
+Everything else — the playground, evolution arena, and challenge system — builds on top of it.
 
----
-
-## Quick Start
-
-```bash
+⚙️ What this is / is not
+✅ What this is
+A working custom language runtime
+A deterministic execution engine
+A foundation for governed systems (AAIS)
+🚫 What this is not
+Not a general-purpose Python framework
+Not a toy scripting demo
+Not production-hardened (yet)
+🚀 Features
+Feature	Status
+Tokenizer	✅
+Recursive descent parser	✅
+AST builder	✅
+Bytecode compiler	✅
+Stack-based VM	✅
+Variable assignment	✅
+Arithmetic operations	✅
+Functions (params + return)	✅
+Conditionals (if / else)	✅
+Loops (while, repeat)	✅
+Lists and dictionaries	✅
+Built-ins (print, len, etc.)	✅
+⚡ Quick Start
 git clone https://github.com/warheart1984-ctrl/ul-language-vm.git
 cd ul-language-vm
 python ul_core_1.py
-```
-
----
-
-## Example
-
-```
+💡 Example
 set x to 5
 set y to 3
 
@@ -62,160 +61,94 @@ print z
 repeat 3 times
     print "loop"
 end
-```
 
-**Output:**
-```
+Output:
+
 8
 loop
 loop
 loop
-```
-
----
-
-## Architecture
-
-Source code flows through the full pipeline:
-
-```
+🧩 Architecture
 UL Source Code
       ↓
-  Tokenizer        →  breaks source into tokens
+  Tokenizer        → breaks source into tokens
       ↓
-   Parser          →  recursive descent, builds AST
+   Parser          → recursive descent, builds AST
       ↓
-     AST           →  abstract syntax tree
+     AST           → abstract syntax tree
       ↓
-  Bytecode         →  compiles AST to instructions
+  Bytecode         → compiled instructions
  Compiler
       ↓
-Stack-based VM     →  executes bytecode deterministically
-```
+Stack-based VM     → deterministic execution
+🧪 Dev Playground
 
----
+The interactive UL sandbox is included as a packaged build:
 
-## Roadmap — UL Dev Playground
-
-This VM is Phase 1 of a larger project: the **UL Dev Playground** — a transparent, interactive environment for developers to explore how programming languages actually work.
-
-### Three Modes
-
-#### 🎮 Play Mode — UL Sandbox
-Write UL code and watch the AST, bytecode, and VM state update live. Like opening the hood of a language engine while it's running.
-
-- Live UL editor
-- AST viewer
-- Bytecode viewer
-- VM stepper (step / run / rewind)
-- Stack + heap visualizer
-- Execution timeline
-- Performance meter
-
-#### 🔥 Chaos Mode — Evolution Arena
-Write a UL function, pick a goal (speed, size, correctness, weirdness), and watch the engine mutate and evolve your code across generations.
-
-- Mutation diff viewer
-- Fitness graph
-- Branching evolution tree
-- Export best version
-
-#### 🧩 Puzzle Mode — VM Challenge Pack
-Curated VM puzzles. Fix broken instructions. Implement `CALL` / `RET`. Make recursion work. Like Advent of Code, but for language nerds.
-
-- Fix a broken instruction
-- Add `JUMP_IF_FALSE`
-- Implement `CALL` / `RET`
-- Optimize bytecode
-- Add a built-in
-
-### Build Order
-
-| Phase | Milestone | Description |
-|---|---|---|
-| ✅ 1 | Core Engine | Tokenizer → Parser → Bytecode Compiler → VM |
-| 🔜 2 | UL Sandbox | Live editor with AST + VM visualizer |
-| 🔜 3 | Evolution Arena | Mutation engine + fitness graph |
-| 🔜 4 | VM Challenge Pack | Weekly puzzles, community contributions |
-| 🔜 5 | Extensions | Package manager · Standard library · WASM compiler |
-
----
-
-## Project Structure (Planned)
-
-```
-UL-Playground/
-├── core/
-│   ├── tokenizer.py
-│   ├── parser.py
-│   ├── ast.py
-│   ├── compiler.py
-│   ├── bytecode.py
-│   ├── vm.py
-│   └── evolving_engine.py
-├── sandbox/
-│   ├── sandbox_app.py
-│   └── ui/
-├── arena/
-│   ├── arena_app.py
-│   └── ui/
-├── challenges/
-│   ├── challenge_engine.py
-│   └── challenge_sets/
-└── docs/
-```
-
----
-
-## Part of the AAIS Architecture
-
-UL is the execution substrate for **AAIS** — a structured system designed around deterministic, auditable, and traceable behavior. Every token, every AST node, every bytecode instruction is intentional and inspectable.
-
----
-
-## Contributing
-
-This project is early and moving fast. If you want to:
-
-- Add a new built-in function
-- Extend the VM instruction set
-- Build a UI for the sandbox
-- Submit a VM challenge puzzle
-
-Open an issue or a PR. All contributions welcome.
-
-Search within code
- 
-‎dev playground.zip‎
-36.3 KB
-Binary file not shown.
-1 commit comments
-Comments
-1
- (1)
-warheart1984-ctrl commented now
-@warheart1984-ctrl
-
-warheart1984-ctrl
-now
-Owner
-Author
-Dev Playground
-The playground is included as a packaged build:
-
-dev playground.zip contains the interactive UL sandbox environment
-This is separated from the core VM to keep the runtime clean and minimal
-To use:
-
-Extract the zip
+dev playground.zip contains the UL sandbox environment
+Kept separate to maintain a clean, minimal core runtime
+Usage
+Extract dev playground.zip
+Open the extracted folder
 Run the playground app (instructions inside)
 
----
+👉 This represents Phase 2 (UL Sandbox) of the roadmap.
 
-## License
+🗺️ Roadmap — UL Dev Playground
 
-[Apache 2.0](LICENSE) — use it, fork it, build on it.
+This VM is Phase 1 of a larger system.
 
----
+🎮 Play Mode — UL Sandbox
+Live UL editor
+AST viewer
+Bytecode viewer
+VM stepper (step / run / rewind)
+Stack + heap visualizer
+Execution timeline
+🔥 Chaos Mode — Evolution Arena
+Mutation engine
+Fitness graph
+Evolution tree
+Export best version
+🧩 Puzzle Mode — VM Challenge Pack
+Fix broken instructions
+Implement CALL / RET
+Optimize bytecode
+Add built-ins
+📦 Build Order
+Phase	Milestone	Description
+✅ 1	Core Engine	Full runtime pipeline
+🔜 2	UL Sandbox	Interactive visualizer
+🔜 3	Evolution Arena	Mutation + fitness
+🔜 4	VM Challenges	Community puzzles
+🔜 5	Extensions	Packages · stdlib · WASM
+🧠 Part of the AAIS Architecture
 
-*Built by [@warheart1984-ctrl](https://github.com/warheart1984-ctrl)*
+UL is the execution substrate for AAIS.
+
+It enables:
+
+deterministic execution
+full traceability
+inspectable computation
+
+Every token, AST node, and instruction is intentional.
+
+This makes UL suitable for governed runtime systems, not just general scripting.
+
+🤝 Contributing
+
+Want to help?
+
+Add built-ins
+Extend VM instructions
+Build UI for sandbox
+Create challenge puzzles
+
+Open an issue or PR — contributions welcome.
+
+📜 License
+
+Apache 2.0 — use it, fork it, build on it.
+
+Built by @warheart1984-ctrl
